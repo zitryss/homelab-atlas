@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b111b">
+  <meta name="description" content="A private, interactive map of the zitryss.dev homelab. Documented topology and local failure exploration — not live telemetry.">
+  <title>Homelab Atlas · zitryss.dev</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#network">Skip to topology</a>
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">⌘</span><div><div class="eyebrow">zitryss.dev <span>/ infrastructure</span></div><h1>Homelab Atlas<span class="title-dot">.</span></h1></div></div>
+    <div class="document-status"><span class="status-square"></span> DOCUMENTED TOPOLOGY <span class="status-divider">/</span> NOT LIVE</div>
+  </header>
+  <main>
+    <section class="toolbar" aria-label="Map controls">
+      <div class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a device, IP, or service…" aria-label="Search devices, IPs, and services" aria-controls="search-results" autocomplete="off"><kbd>/</kbd><div id="search-results" class="search-results" hidden></div></div>
+      <label class="zone-control"><span>Network</span><select id="zone" aria-label="Filter by network zone"><option value="all">All zones</option></select></label>
+      <div class="toolbar-end"><button id="flow" class="quiet-button" aria-pressed="false" title="Toggle illustrative cable animation, not real traffic"><span aria-hidden="true">⇢</span> Flow <span id="flow-state">off</span></button><button id="reset-view" class="quiet-button" title="Reset view, selection, search, and zone filter">Reset view</button></div>
+    </section>
+    <div id="simulation-banner" class="simulation-banner" role="status" hidden><div><strong>SIMULATION ONLY</strong><span id="simulation-summary"></span></div><button id="banner-clear">Restore baseline <span aria-hidden="true">↺</span></button></div>
+    <div class="workspace">
+      <section class="map-panel" aria-label="Interactive network diagram">
+        <div class="map-heading"><div><span class="eyebrow">01 / NETWORK TOPOLOGY</span><p id="map-subtitle">One lab. Every connection.</p></div><span class="map-count" id="map-count"></span></div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <svg id="network" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Homelab topology. Drag to pan, scroll to zoom. Tab to devices and connections, Enter to inspect." tabindex="0"><title>Interactive homelab topology</title><defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.9" fill="#263343"/></pattern></defs><g id="world"><rect id="grid-plane" x="-8000" y="-8000" width="17600" height="17120" fill="url(#grid)" pointer-events="none"/><g id="bands" aria-hidden="true"></g><g id="edges"></g><g id="devices"></g></g></svg>
+          <div class="map-help" aria-hidden="true">DRAG TO PAN <span>·</span> SCROLL TO ZOOM</div>
+          <div class="zoom-controls" role="group" aria-label="Zoom controls"><button id="zoom-out" aria-label="Zoom out">−</button><output id="zoom-level" aria-label="Zoom level">100%</output><button id="zoom-in" aria-label="Zoom in">+</button><span class="control-rule"></span><button id="fit" title="Fit entire topology (F)" aria-label="Fit entire topology">⛶</button></div>
+        </div>
+        <footer class="map-footer"><div id="legend" class="legend" aria-label="Connection legend"></div><p>Connections are documented. Flow is illustrative.</p></footer>
+      </section>
+      <aside class="sidebar" aria-label="Inspector and failure explorer">
+        <section class="inspector-section"><div class="section-heading"><span class="eyebrow">02 / INSPECTOR</span><button id="deselect" class="icon-button" aria-label="Close selection" hidden>×</button></div><div id="inspector"></div></section>
+        <section class="failure-section"><div class="section-heading"><span class="eyebrow">03 / FAILURE EXPLORER</span><span class="lab-tag">SANDBOX</span></div><h2>What if it goes down?</h2><p class="muted">Explore documented dependencies. Nothing here changes your infrastructure.</p><label class="field-label" for="scenario">Failure preset</label><select id="scenario"><option value="">Choose a scenario…</option></select><div class="impact-heading"><h3>Modeled impact</h3><span id="impact-count" class="count-pill">0</span></div><div id="impacts" aria-live="polite"></div><button id="clear-faults" class="restore-button" disabled>↺ Restore all devices</button><p class="model-note">A qualitative dependency model, not a reachability test or an HA guarantee.</p></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>PERSONAL INFRASTRUCTURE / A WORKING FIELD GUIDE</span><span id="reviewed"></span></footer>
+  </main>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><div class="noscript">Enable JavaScript to explore this locally rendered topology.</div></noscript>
+</body>
+</html>
